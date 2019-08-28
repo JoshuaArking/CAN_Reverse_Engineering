@@ -1,4 +1,5 @@
 from PreProcessor import PreProcessor
+from Transform import generate_integrals
 from Validator import Validator
 from LexicalAnalysis import tokenize_dictionary, generate_signals
 from SemanticAnalysis import generate_correlation_matrix, signal_clustering, j1979_signal_labeling
@@ -25,6 +26,7 @@ pickle_linkage_filename:    str = 'pickleLinkage.p'
 pickle_combined_df_filename: str = 'pickleCombinedDataFrame.p'
 csv_all_signals_filename:   str = 'complete_correlation_matrix.csv'
 pickle_timer_filename:      str = 'pickleTimer.p'
+pickle_integral_filename:   str = 'pickleIntegral.p'
 
 dump_to_pickle:             bool = True
 
@@ -303,3 +305,19 @@ class Sample:
         plot_dendrogram(a_timer=a_timer, linkage_matrix=linkage_matrix, threshold=self.max_inter_cluster_dist,
                         vehicle_number=vehicle_number, force=force_dendrogram_plotting)
         self.move_back_to_parent_directory()
+
+    def generate_integrals(self, id_dictionary: dict, postpone_pickle: bool = False):
+        self.make_and_move_to_vehicle_directory()
+        integral_dict = generate_integrals(a_timer=a_timer,
+                                           signal_dict=id_dictionary,
+                                           integral_pickle_filename=pickle_integral_filename,
+                                           normalize_strategy=signal_normalize_strategy,
+                                           force=force_signal_generation)
+        # postpone_pickle is simply a check whether J1979 data was present in the sample. If it was present, then wait
+        # to save out the signal_dictionary until correlated Signals are labeled by sample.j1979_labeling().
+        if dump_to_pickle and not postpone_pickle and not path.isfile(pickle_integral_filename):
+            print("\nDumping integral dictionary for " + self.output_vehicle_dir + " to " + pickle_integral_filename)
+            dump(integral_dict, open(pickle_integral_filename, "wb"))
+            print("\tComplete...")
+        self.move_back_to_parent_directory()
+        return integral_dict

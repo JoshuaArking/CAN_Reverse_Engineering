@@ -25,14 +25,16 @@ for key, sample_list in samples.items():  # type: tuple, list
         print("\n\t##### BEGINNING LEXICAL ANALYSIS OF " + sample.output_vehicle_dir + " #####")
         sample.tokenize_dictionary(id_dict)
         signal_dict = sample.generate_signals(id_dict, bool(j1979_dict))
+        signal_dict = sample.generate_integrals(signal_dict, bool(j1979_dict))
         sample.plot_arb_ids(id_dict, signal_dict, vehicle_number=str(current_vehicle_number))
 
+        # Lexical Analysis disabled due to lack of protection against overly large clusters when integrating signals
         #                 LEXICAL ANALYSIS                     #
-        print("\n\t##### BEGINNING SEMANTIC ANALYSIS OF " + sample.output_vehicle_dir + " #####")
-        corr_matrix, combined_df = sample.generate_correlation_matrix(signal_dict)
-        if j1979_dict:
-            signal_dict, j1979_correlation = sample.j1979_labeling(j1979_dict, signal_dict, combined_df)
-        cluster_dict, linkage_matrix = sample.cluster_signals(corr_matrix)
-        sample.plot_clusters(cluster_dict, signal_dict, bool(j1979_dict), vehicle_number=str(current_vehicle_number))
-        sample.plot_dendrogram(linkage_matrix, vehicle_number=str(current_vehicle_number))
-        current_vehicle_number += 1
+        # print("\n\t##### BEGINNING SEMANTIC ANALYSIS OF " + sample.output_vehicle_dir + " #####")
+        # corr_matrix, combined_df = sample.generate_correlation_matrix(signal_dict)
+        # if j1979_dict:
+        #     signal_dict, j1979_correlation = sample.j1979_labeling(j1979_dict, signal_dict, combined_df)
+        # cluster_dict, linkage_matrix = sample.cluster_signals(corr_matrix)
+        # sample.plot_clusters(cluster_dict, signal_dict, bool(j1979_dict), vehicle_number=str(current_vehicle_number))
+        # sample.plot_dendrogram(linkage_matrix, vehicle_number=str(current_vehicle_number))
+        # current_vehicle_number += 1
