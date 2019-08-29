@@ -1,4 +1,4 @@
-from numpy import float64
+from numpy import float64, array
 from pandas import Series
 from os import path, remove
 from pickle import load
@@ -6,7 +6,6 @@ from scipy import integrate
 from PipelineTimer import PipelineTimer
 
 
-# noinspection PyProtectedMember
 def generate_integrals(a_timer: PipelineTimer,
                        signal_dict: dict,
                        integral_pickle_filename: str,
@@ -29,8 +28,8 @@ def generate_integrals(a_timer: PipelineTimer,
 
                 transformed_signal = signal
 
-                transformed_signal.time_series = Series(integrate.cumtrapz(signal.time_series._ndarray_values),
-                                                        index=signal.time_series._index[:-1],
+                transformed_signal.time_series = Series(integrate.cumtrapz(signal.time_series.values),
+                                                        index=signal.time_series.axes[0][:-1],
                                                         dtype=float64)
 
                 # Normalize the signal and update its meta-data
@@ -45,7 +44,7 @@ def generate_integrals(a_timer: PipelineTimer,
                                                 transformed_signal.start_index,
                                                 transformed_signal.stop_index): transformed_signal}
 
-                a_timer.set_token_to_signal()
+                a_timer.set_signal_to_integral()
 
-    a_timer.set_signal_generation()
+    a_timer.set_integral_generation()
     return integral_dict

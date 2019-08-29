@@ -29,6 +29,10 @@ class PipelineTimer:
         self.plot_save_arb_id_dict: float = 0.0
         self.plot_save_arb_id:      List[float] = []
 
+        # Transform Timings
+        self.signal_to_integral:    List[float] = []
+        self.integral_generation:   float = 0.0
+
         # Semantic Analysis Timings
         self.subset_selection:      float = 0.0
         self.plot_save_cluster_dict: float = 0.0
@@ -147,3 +151,12 @@ class PipelineTimer:
     # Called in the loop within the Plotter.py plot_signals_by_cluster function.
     def set_plot_save_cluster(self):
         self.plot_save_cluster.append(time() - self.iteration_time)
+
+    def set_signal_to_integral(self):
+        self.signal_to_integral.append(time() - self.iteration_time)
+
+    def set_integral_generation(self):
+        self.integral_generation = time() - self.function_time
+        if self.verbose:
+            print("\n" + str(self.integral_generation) +
+                  " seconds to generate integrals and their statistics using signals.")
