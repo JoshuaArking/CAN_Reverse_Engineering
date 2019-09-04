@@ -130,7 +130,7 @@ def plot_signals_by_cluster(a_timer: PipelineTimer,
         fig.set_size_inches(8, (1 + len(list_of_signals)+1) * 1.3)
 
         size_adjust = len(list_of_signals) / 100
-        # The min() statement provides whitespace for the suptitle depending on the number of subplots.
+        # The min() statement provides whitespace for the subtitle depending on the number of subplots.
         plt.tight_layout(h_pad=1, rect=(0, 0, 1, min(0.985, 0.93 + size_adjust)))
         # This adjusts whitespace padding on the left and right of the subplots
         fig.subplots_adjust(left=0.07, right=0.98)
@@ -193,7 +193,7 @@ def plot_j1979(a_timer: PipelineTimer, j1979_dict: dict, vehicle_number: str, fo
     fig.set_size_inches(8, (1 + plot_length) * 1.3)
 
     size_adjust = plot_length / 100
-    # The min() statement provides whitespace for the suptitle depending on the number of subplots.
+    # The min() statement provides whitespace for the subtitle depending on the number of subplots.
     plt.tight_layout(h_pad=1, rect=(0, 0, 1, min(0.985, 0.93 + size_adjust)))
     # This adjusts whitespace padding on the left and right of the subplots
     fig.subplots_adjust(left=0.07, right=0.98)

@@ -17,7 +17,7 @@ class J1979:
         #                                       -- -- -- --     --
         # PID 0x0C (12 dec) (Engine RPM):       02 01 0c 00 ... 00
         # PID 0x0D (13 dec) (Vehicle Speed):    02 01 0d 00 ... 00
-        # PID 0x11 (17 dec) (Trottle Pos.):     02 01 11 00 ... 00
+        # PID 0x11 (17 dec) (Throttle Pos.):     02 01 11 00 ... 00
         # PID 0x61 (97 dec) (Demand % Torque):  02 01 61 00 ... 00
         # PID 0x62 (98 dec) (Engine % Torque):  02 01 62 00 ... 00
         # PID 0x63 (99 dec) (Ref. Torque):      02 01 63 00 ... 00
