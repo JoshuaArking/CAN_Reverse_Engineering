@@ -290,6 +290,9 @@ def plot_dendrogram(a_timer: PipelineTimer,
         else:
             print("Dendrogram already plotted. Skipping...")
             return
+
+    a_timer.start_function_time()
+
     plt.figure(figsize=(7, 7), dpi=600)
     R: dict = dendrogram(Z=linkage_matrix, orientation='top', distance_sort='ascending', no_labels=True)
     plt.title("Dendrogram of Agglomerative Clustering for Vehicle " + vehicle_number)
@@ -310,4 +313,5 @@ def plot_dendrogram(a_timer: PipelineTimer,
             format=figure_format,
             transparent=figure_transp)
     plt.close()
+    a_timer.set_plot_save_dendrogram()
     print("\t\tComplete...")

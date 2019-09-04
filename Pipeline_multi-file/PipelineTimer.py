@@ -38,6 +38,7 @@ class PipelineTimer:
         self.plot_save_cluster_dict: float = 0.0
         self.label_propagation:     float = 0.0
         self.plot_save_cluster:     List[float] = []
+        self.plot_save_dendrogram:  float = 0.0
 
     def start_function_time(self):
         self.function_time = time()
@@ -160,3 +161,8 @@ class PipelineTimer:
         if self.verbose:
             print("\n" + str(self.integral_generation) +
                   " seconds to generate integrals and their statistics using signals.")
+
+    def set_plot_save_dendrogram(self):
+        self.plot_save_dendrogram = time() - self.function_time
+        if self.verbose:
+            print("\n" + str(self.plot_save_dendrogram) + " seconds to plot and save the dendrogram.")
