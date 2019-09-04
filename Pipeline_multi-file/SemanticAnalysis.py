@@ -74,9 +74,9 @@ def signal_clustering(corr_matrix:      DataFrame,
         return [load(open(cluster_pickle, "rb")), load(open(linkage_pickle, "rb"))]
 
     # Remove negative values from the correlation matrix and invert the values
-    corr_matrix.where(corr_matrix > 0, 0, inplace=True)
-    corr_matrix = 1 - corr_matrix
-    X = corr_matrix.values  # type: ndarray
+    corr_matrix.clip(lower=0)
+    corr_matrix: DataFrame = -corr_matrix + 1
+    X = corr_matrix.values
     Y = clip(ssd.squareform(X), 0, None)
     # Z is the linkage matrix. This can serve as input to the scipy.cluster.hierarchy.dendrogram method
     Z = linkage(Y, method='single', optimal_ordering=True)

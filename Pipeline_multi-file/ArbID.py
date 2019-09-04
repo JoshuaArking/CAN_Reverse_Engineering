@@ -10,10 +10,10 @@ class ArbID:
         self.id:                int = arb_id
         # These features are set by PreProcessing.py's generate_arb_id_dictionary
         self.dlc:               int = 0
-        self.original_data:     DataFrame = None
+        self.original_data:     DataFrame
         # These features are set in generate_binary_matrix_and_tang called by generate_arb_id_dictionary
-        self.boolean_matrix:    ndarray = None
-        self.tang:              ndarray = None
+        self.boolean_matrix:    ndarray
+        self.tang:              ndarray
         # Static and short are just book keeping flags to let other methods know this Arb ID prob isn't worth analyzing
         self.static:            bool = True
         self.short:             bool = True
@@ -21,7 +21,7 @@ class ArbID:
         self.ci_sensitivity:    float = 0.0
         self.freq_mean:         float = 0.0
         self.freq_std:          float = 0.0
-        self.freq_ci:           tuple = None
+        self.freq_ci:           tuple
         self.mean_to_ci_ratio:  float = 0.0
         self.synchronous:       bool = False
         # These features are set by LexicalAnalysis.py's get_composition

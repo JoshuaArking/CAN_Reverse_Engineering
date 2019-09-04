@@ -13,7 +13,7 @@ class PreProcessor:
         self.data_filename:         str = data_filename
         self.id_output_filename:    str = id_output_filename
         self.j1979_output_filename: str = j1979_output_filename
-        self.data:                  DataFrame = None
+        self.data:                  DataFrame
         self.import_time:           float = 0.0
         self.dictionary_time:       float = 0.0
         self.total_time:            float = 0.0
