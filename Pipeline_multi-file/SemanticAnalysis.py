@@ -27,6 +27,8 @@ def generate_correlation_matrix(a_timer:                          PipelineTimer,
         return [read_csv(csv_signals_correlation_filename, index_col=0).rename(index=literal_eval, columns=literal_eval),
                 load(open(combined_df_filename, "rb"))]
 
+    a_timer.start_function_time()
+
     non_static_signals_dict = {}
     largest_index = []
     df_columns = []
@@ -53,6 +55,8 @@ def generate_correlation_matrix(a_timer:                          PipelineTimer,
     # signals. We're going to have to clean this up before clustering.
     corr_matrix.dropna(axis=0, how='all', inplace=True)
     corr_matrix.dropna(axis=1, how='all', inplace=True)
+
+    a_timer.set_generate_corr_matrix()
 
     # Be sure to reflect any signal IDs dropped from the correlation matrix (due to empty row/col) in the combined DF
     # as well.

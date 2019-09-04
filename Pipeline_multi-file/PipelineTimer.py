@@ -39,6 +39,7 @@ class PipelineTimer:
         self.label_propagation:     float = 0.0
         self.plot_save_cluster:     List[float] = []
         self.plot_save_dendrogram:  float = 0.0
+        self.generate_corr_matrix:  float = 0.0
 
     def start_function_time(self):
         self.function_time = time()
@@ -166,3 +167,8 @@ class PipelineTimer:
         self.plot_save_dendrogram = time() - self.function_time
         if self.verbose:
             print("\n" + str(self.plot_save_dendrogram) + " seconds to plot and save the dendrogram.")
+
+    def set_generate_corr_matrix(self):
+        self.generate_corr_matrix = time() - self.function_time
+        if self.verbose:
+            print("\n" + str(self.generate_corr_matrix) + " seconds to generate correlation matrix.")
