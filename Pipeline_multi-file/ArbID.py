@@ -10,7 +10,7 @@ class ArbID:
         self.id:                int = arb_id
         # These features are set by PreProcessing.py's generate_arb_id_dictionary
         self.dlc:               int = 0
-        self.original_data:     DataFrame
+        self.original_data:     DataFrame = type(None)
         # These features are set in generate_binary_matrix_and_tang called by generate_arb_id_dictionary
         self.boolean_matrix:    ndarray
         self.tang:              ndarray
@@ -21,7 +21,7 @@ class ArbID:
         self.ci_sensitivity:    float = 0.0
         self.freq_mean:         float = 0.0
         self.freq_std:          float = 0.0
-        self.freq_ci:           tuple
+        self.freq_ci:           tuple = type(None)
         self.mean_to_ci_ratio:  float = 0.0
         self.synchronous:       bool = False
         # These features are set by LexicalAnalysis.py's get_composition

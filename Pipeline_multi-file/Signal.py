@@ -7,11 +7,11 @@ class Signal:
         self.arb_id:        int = arb_id
         self.start_index:   int = start_index
         self.stop_index:    int = stop_index
-        self.time_series:   Series
+        self.time_series:   Series = type(None)
         self.static:        bool = True
         self.shannon_index: float = 0
         self.plot_title:    str = ""
-        self.j1979_title:   str
+        self.j1979_title:   str = ""
         self.j1979_pcc:     float = 0
 
     def normalize_and_set_metadata(self, normalize_strategy):

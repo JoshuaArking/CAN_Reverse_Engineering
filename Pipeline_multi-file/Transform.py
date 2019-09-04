@@ -1,4 +1,4 @@
-from numpy import float64, array
+from numpy import float64
 from pandas import Series
 from os import path, remove
 from pickle import load

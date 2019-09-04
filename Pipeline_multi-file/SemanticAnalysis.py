@@ -1,7 +1,7 @@
 from pandas import concat, DataFrame, read_csv
-from numpy import ndarray, zeros, clip
+from numpy import zeros, clip
 from os import path, remove
-from pickle import load, dump
+from pickle import load
 from ast import literal_eval
 from J1979 import J1979
 from Signal import Signal

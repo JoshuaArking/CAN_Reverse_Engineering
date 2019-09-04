@@ -13,7 +13,7 @@ class PreProcessor:
         self.data_filename:         str = data_filename
         self.id_output_filename:    str = id_output_filename
         self.j1979_output_filename: str = j1979_output_filename
-        self.data:                  DataFrame
+        self.data:                  DataFrame = type(None)
         self.import_time:           float = 0.0
         self.dictionary_time:       float = 0.0
         self.total_time:            float = 0.0
@@ -113,7 +113,7 @@ class PreProcessor:
 
                     this_id = ArbID(arb_id)
                     this_id.original_data = self.data.loc[self.data['id'] == arb_id]
-                    this_id.original_data = this_id.original_data.copy()  # type: DataFrame
+                    this_id.original_data = this_id.original_data.copy()
 
                     # Check if the Arbitration ID always used the same DLC. If not, ignore it.
                     # We can effectively ignore this Arb ID by not adding it to the Arb ID dictionary.
