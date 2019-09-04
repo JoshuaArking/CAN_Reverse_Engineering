@@ -59,13 +59,13 @@ freq_analysis_accuracy = z_lookup[0.9]
 freq_synchronous_threshold = 0.1
 
 # Threshold parameters used during lexical analysis.
-tokenization_bit_distance:  float = 0.2
+tokenization_bit_distance:  float = 0.05
 tokenize_padding:           bool = True
 merge_tokens:               bool = True
 
 # Threshold parameters used during semantic analysis
 subset_selection_size:      float = 0.25
-max_intra_cluster_distance: float = 0.20
+max_intra_cluster_distance: float = 0.10
 min_j1979_correlation:      float = 0.85
 # fuzzy_labeling:             bool = True
 
