@@ -294,7 +294,7 @@ def plot_dendrogram(a_timer: PipelineTimer,
     a_timer.start_function_time()
 
     plt.figure(figsize=(7, 7), dpi=600)
-    R: dict = dendrogram(Z=linkage_matrix, orientation='top', distance_sort='ascending', no_labels=True)
+    dendrogram(Z=linkage_matrix, orientation='top', distance_sort='ascending', no_labels=True)
     plt.title("Dendrogram of Agglomerative Clustering for Vehicle " + vehicle_number)
     plt.xlabel("Signals Observed")
     plt.ylabel("Single Linkage Cluster Merge Distance")

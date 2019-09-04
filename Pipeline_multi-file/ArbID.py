@@ -12,8 +12,8 @@ class ArbID:
         self.dlc:               int = 0
         self.original_data:     DataFrame = type(None)
         # These features are set in generate_binary_matrix_and_tang called by generate_arb_id_dictionary
-        self.boolean_matrix:    ndarray
-        self.tang:              ndarray
+        self.boolean_matrix:    ndarray = type(None)
+        self.tang:              ndarray = type(None)
         # Static and short are just book keeping flags to let other methods know this Arb ID prob isn't worth analyzing
         self.static:            bool = True
         self.short:             bool = True
