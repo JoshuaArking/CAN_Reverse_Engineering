@@ -385,6 +385,8 @@ def j1979_signal_labeling(a_timer:               PipelineTimer,
         if path.isfile(signal_filename):
             remove(signal_filename)
 
+    a_timer.start_function_time()
+
     latest_start_index = 0.0
     earliest_end_index = 99999999999999.9
     df_columns = []
@@ -425,6 +427,8 @@ def j1979_signal_labeling(a_timer:               PipelineTimer,
             signal_dict[index[0]][index] = signal
 
             # print(i, index, row[max_index], max_index, row.values)
+
+    a_timer.set_j1979_signal_labeling()
 
     return signal_dict, correlation_matrix[df_columns][:-len(df_columns)]
 

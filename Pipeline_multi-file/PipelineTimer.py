@@ -37,6 +37,7 @@ class PipelineTimer:
         self.subset_selection:      float = 0.0
         self.plot_save_cluster_dict: float = 0.0
         self.label_propagation:     float = 0.0
+        self.j1979_label_propagation: float = 0.0
         self.plot_save_cluster:     List[float] = []
         self.plot_save_dendrogram:  float = 0.0
         self.generate_corr_matrix:  float = 0.0
@@ -172,3 +173,8 @@ class PipelineTimer:
         self.generate_corr_matrix = time() - self.function_time
         if self.verbose:
             print("\n" + str(self.generate_corr_matrix) + " seconds to generate correlation matrix.")
+
+    def set_j1979_signal_labeling(self):
+        self.j1979_label_propagation = time() - self.function_time
+        if self.verbose:
+            print("\n" + str(self.j1979_label_propagation) + " seconds to perform j1979 signal labeling.")
