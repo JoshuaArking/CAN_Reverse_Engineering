@@ -38,7 +38,7 @@ signal_normalize_strategy:  Callable = minmax_scale
 force_pre_processing:       bool = False
 force_threshold_search:     bool = False
 force_threshold_plotting:   bool = False
-force_j1979_plotting:       bool = True
+force_j1979_plotting:       bool = False
 use_j1979:                  bool = True
 
 force_lexical_analysis:     bool = False
@@ -48,7 +48,7 @@ force_arb_id_plotting:      bool = True
 force_correlation_matrix:   bool = False
 force_clustering:           bool = False
 force_signal_labeling:      bool = False
-use_j1979_tags_in_plots:    bool = True
+use_j1979_tags_in_plots:    bool = False
 force_cluster_plotting:     bool = True
 force_dendrogram_plotting:  bool = True
 
@@ -59,13 +59,13 @@ freq_analysis_accuracy = z_lookup[0.9]
 freq_synchronous_threshold = 0.1
 
 # Threshold parameters used during lexical analysis.
-tokenization_bit_distance:  float = 0.05
+tokenization_bit_distance:  float = 0.2
 tokenize_padding:           bool = True
 merge_tokens:               bool = True
 
 # Threshold parameters used during semantic analysis
 subset_selection_size:      float = 0.25
-max_intra_cluster_distance: float = 0.10
+max_intra_cluster_distance: float = 0.20
 min_j1979_correlation:      float = 0.85
 # fuzzy_labeling:             bool = True
 
