@@ -89,6 +89,30 @@ class J1979:
                           index=original_data.index,
                           name=self.title,
                           dtype=int8)
+        elif self.pid == 4:
+            self.title = 'Calculated Engine Load'
+            # PID is 0x04: Calculated Engine Load. 1 byte of data AA using 100/255 % per bit: AA * 100/255% load.
+            # Min value: 0      Max value: 100          units: %
+            return Series(data=100 * original_data['b3'] / 255,
+                          index=original_data.index,
+                          name=self.title,
+                          dtype=uint8)
+        elif self.pid == 16:
+            self.title = 'MAF air flow rate'
+            # PID is 0x10: MAF air flow rate. 2 byte of data
+            # Min value: 0   Max value: 655.35          units: grams/sec
+            return Series(data=25.6 * original_data['b3'] + original_data['b4'],
+                          index=original_data.index,
+                          name=self.title,
+                          dtype=float16)
+        elif self.pid == 31:
+            self.title = 'Run time since engine start'
+            # PID is 0x1F: Run time since engine start. 1 byte of data
+            # Min value: 0   Max value: 65,535          units: seconds
+            return Series(data=256 * original_data['b3'] + original_data['b4'],
+                          index=original_data.index,
+                          name=self.title,
+                          dtype=uint16)
         else:
             # Looks like you were requesting J1979 data with your sniffer that hasn't been implemented in this code.
             # Time to do the leg work to expand this class accordingly then re-run the pipeline.
