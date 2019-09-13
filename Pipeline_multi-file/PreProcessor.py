@@ -135,6 +135,17 @@ class PreProcessor:
                         correction_mask = this_id.original_data.index.duplicated()
                         this_id.original_data = this_id.original_data[~correction_mask]
 
+                    # Check for non-monotonic values and correct them
+                    last_line = 0.0
+                    for i, line in enumerate(this_id.original_data.index):
+                        if float(line) < last_line:
+                            as_list = this_id.original_data.index.tolist()
+                            idx = as_list.index(line)
+                            as_list[idx] = last_line + 0.0000001 # TODO: Make a more informed decision how to deal with non-monotonic values
+                            this_id.original_data.index = as_list
+                            line = last_line + 0.0000001
+                        last_line = line
+
                     this_id.generate_binary_matrix_and_tang(a_timer, normalize_strategy)
                     this_id.analyze_transmission_frequency(time_convert=time_conversion,
                                                            ci_accuracy=freq_analysis_accuracy,
