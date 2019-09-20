@@ -51,22 +51,45 @@ class PreProcessor:
 
         a_timer.set_can_csv_to_df()
 
-        # sanity check output of the original data
-        # print("\nSample of the original data:")
-        # print(self.data.head(5), "\n")
+    def import_pid_dict(self, filename):
+
+        def pid(x):
+            return int(x)
+
+        def title(x):
+            return x
+
+        def formula(fx):
+            f = lambda A,B,C,D:eval(fx)
+            return f
+
+        # Used by pd.read_csv to apply the functions to the respective column vectors in the .csv file
+        convert_dict = {'pid': pid, 'title': title, 'formula': formula}
+
+        print("\nReading in " + self.data_filename + "...")
+
+        return read_csv(filename,
+                        header=None,
+                        names=['pid', 'title', 'formula'],
+                        skiprows=0,
+                        delimiter=',',
+                        converters=convert_dict,
+                        index_col=0)
+
 
     @staticmethod
-    def generate_j1979_dictionary(j1979_data: DataFrame) -> dict:
+    def generate_j1979_dictionary(j1979_data: DataFrame, pid_dict: DataFrame) -> dict:
 
         d = {}
         services = j1979_data.groupby('b2')
         for uds_pid, data in services:
-            d[uds_pid] = J1979(uds_pid, data)
+            d[uds_pid] = J1979(uds_pid, data, pid_dict)
         return d
 
     def generate_arb_id_dictionary(self,
                                    a_timer:                     PipelineTimer,
                                    normalize_strategy:          Callable,
+                                   pid_dict:                    DataFrame,
                                    time_conversion:             int = 1000,
                                    freq_analysis_accuracy:      float = 0.0,
                                    freq_synchronous_threshold:  float = 0.0,
@@ -106,7 +129,7 @@ class PreProcessor:
                     j1979_data.drop('dlc', axis=1, inplace=True)
                     j1979_data.drop('id', axis=1, inplace=True)
                     a_timer.start_nested_function_time()
-                    j1979_dictionary = self.generate_j1979_dictionary(j1979_data)
+                    j1979_dictionary = self.generate_j1979_dictionary(j1979_data, pid_dict)
                     a_timer.set_j1979_creation()
                 elif arb_id > 0:
                     a_timer.start_iteration_time()
