@@ -1,5 +1,4 @@
 from os import chdir, path, getcwd, walk
-import re
 from Sample import Sample
 
 
@@ -22,7 +21,7 @@ class FileBoi:
         # |   |   +-- Model y_0
         # |   |   |   +-- ModelYear z_0
         # |   |   |   |   +-- Samples
-        # |   |   |   |   |   +-- sample = re.match('loggerProgram[\d]+.log', a_file_in_this_folder)
+        # |   |   |   |   |   +-- any file ending with '.log'
         # |   +-- Make x_1.... etc.
         # +-- Some folder
         # |   +-- The directory with these scripts
@@ -57,14 +56,13 @@ class FileBoi:
                 elif len(current_vehicle) == 1 and current_vehicle != "":
                     year = current_vehicle[0]
                 for file in fileList:
-                    # Check if this file name matches the expected name for a CAN data sample. If so, create new Sample
-                    m = re.match('loggerProgram[\d]+.log', file)
+                    m = file.endswith('.log')
                     if m:
                         if not (make, model, year) in sample_dict:
                             sample_dict[(make, model, year)] = []
                         this_sample_index = str(len(sample_dict[(make, model, year)]))
                         this_sample = Sample(make=make, model=model, year=year, sample_index=this_sample_index,
-                                             sample_path=dirName + "/" + m.group(0), kfold_n=kfold_n)
+                                             sample_path=dirName + "/" + file, kfold_n=kfold_n)
                         sample_dict[(make, model, year)].append(this_sample)
                 current_vehicle = []
             else:
