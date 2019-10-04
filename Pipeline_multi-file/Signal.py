@@ -1,13 +1,14 @@
-from pandas import Series
+from pandas import Series, DataFrame
 from math import log10
 
 
 class Signal:
-    def __init__(self, arb_id: int, start_index: int, stop_index: int):
+    def __init__(self, arb_id: int, start_index: int, stop_index: int, original_data: DataFrame):
         self.arb_id:        int = arb_id
         self.start_index:   int = start_index
         self.stop_index:    int = stop_index
         self.time_series:   Series = type(None)
+        self.original_data: DataFrame = original_data
         self.static:        bool = True
         self.shannon_index: float = 0
         self.plot_title:    str = ""

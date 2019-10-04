@@ -163,7 +163,7 @@ def generate_signals(a_timer: PipelineTimer,
             for token in arb_id.tokenization:
                 a_timer.start_iteration_time()
 
-                signal = Signal(k, token[0], token[1])
+                signal = Signal(k, token[0], token[1], arb_id.original_data)
 
                 # Convert the binary ndarray to a list of string representations of each row
                 temp1 = [''.join(str(x) for x in row) for row in arb_id.boolean_matrix[:, token[0]:token[1] + 1]]

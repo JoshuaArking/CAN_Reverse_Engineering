@@ -149,9 +149,9 @@ class PreProcessor:
                     # If DLC < 8, we can automatically drop data column vectors > DLC.
                     # E.G. drop bytes "B7" and "B6" if DLC is 6; those are padding data injected by can-dump and were
                     # not actually on the bus.
-                    if this_id.dlc < 8:
-                        for i in range(this_id.dlc, 8):
-                            this_id.original_data.drop('b' + str(i), axis=1, inplace=True)
+                    #if this_id.dlc < 8:
+                        #for i in range(this_id.dlc, 8):
+                            #this_id.original_data.drop('b' + str(i), axis=1, inplace=True)
 
                     # Check if there are duplicate index values and correct them.
                     if not this_id.original_data.index.is_unique:
