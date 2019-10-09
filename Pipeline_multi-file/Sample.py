@@ -114,7 +114,7 @@ class Sample:
         # Move back to root of './output/make_model_year/sample_index/"
         chdir("../../../")
 
-    def pre_process(self):
+    def pre_process(self, endian_reverse):
         self.make_and_move_to_vehicle_directory()
         pre_processor = PreProcessor(self.path, pickle_arb_id_filename, pickle_j1979_filename, self.use_j1979)
 
@@ -128,7 +128,8 @@ class Sample:
                                                                                    time_conversion,
                                                                                    freq_analysis_accuracy,
                                                                                    freq_synchronous_threshold,
-                                                                                   force_pre_processing)
+                                                                                   force_pre_processing,
+                                                                                   endian_reverse)
 
 
         if dump_to_pickle:
