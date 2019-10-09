@@ -36,7 +36,7 @@ class ArbID:
     def generate_binary_matrix_and_tang(self, a_timer: PipelineTimer, normalize_strategy: Callable):
         a_timer.start_nested_function_time()
 
-        self.boolean_matrix = zeros((self.original_data.__len__(), self.dlc * 8), dtype=uint8)
+        self.boolean_matrix = zeros((self.original_data.__len__(), 64), dtype=uint8) #self.dlc * 8), dtype=uint8)
 
         for i, row in enumerate(self.original_data.itertuples()):
             for j, cell in enumerate(row[1:]):
