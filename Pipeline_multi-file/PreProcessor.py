@@ -93,7 +93,8 @@ class PreProcessor:
                                    time_conversion:             int = 1000,
                                    freq_analysis_accuracy:      float = 0.0,
                                    freq_synchronous_threshold:  float = 0.0,
-                                   force:                       bool = False) -> (dict, dict):
+                                   force:                       bool = False,
+                                   endian_flip:                 bool = False) -> (dict, dict):
         id_dictionary = {}
         j1979_dictionary = {}
 
@@ -152,6 +153,24 @@ class PreProcessor:
                     #if this_id.dlc < 8:
                         #for i in range(this_id.dlc, 8):
                             #this_id.original_data.drop('b' + str(i), axis=1, inplace=True)
+                    if endian_flip:
+                        b0 = this_id.original_data['b0'].copy()
+                        b1 = this_id.original_data['b1'].copy()
+                        b2 = this_id.original_data['b2'].copy()
+                        b3 = this_id.original_data['b3'].copy()
+                        b4 = this_id.original_data['b4'].copy()
+                        b5 = this_id.original_data['b5'].copy()
+                        b6 = this_id.original_data['b6'].copy()
+                        b7 = this_id.original_data['b7'].copy()
+
+                        this_id.original_data['b0'] = b7
+                        this_id.original_data['b1'] = b6
+                        this_id.original_data['b2'] = b5
+                        this_id.original_data['b3'] = b4
+                        this_id.original_data['b4'] = b3
+                        this_id.original_data['b5'] = b2
+                        this_id.original_data['b6'] = b1
+                        this_id.original_data['b7'] = b0
 
                     # Check if there are duplicate index values and correct them.
                     if not this_id.original_data.index.is_unique:
@@ -172,5 +191,4 @@ class PreProcessor:
                     a_timer.set_arb_id_creation()
 
         a_timer.set_raw_df_to_arb_id_dict()
-
         return id_dictionary, j1979_dictionary
