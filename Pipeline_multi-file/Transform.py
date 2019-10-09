@@ -70,6 +70,10 @@ def generate_reverse_endian(a_timer: PipelineTimer,
                 a_timer.start_iteration_time()
 
                 transformed_signal = signal
+                original_time_series = signal.time_series
+
+                print("OLD###")
+                print(transformed_signal.original_data['b0'])
 
                 # I know there's a better way to do this, rewrite after POC works
                 b0 = signal.original_data['b0']
@@ -89,6 +93,9 @@ def generate_reverse_endian(a_timer: PipelineTimer,
                 transformed_signal.original_data['b5'] = b2
                 transformed_signal.original_data['b6'] = b1
                 transformed_signal.original_data['b7'] = b0
+
+                print("NEW###")
+                print(transformed_signal.original_data['b0'])
 
                 # Normalize the signal and update its meta-data
                 transformed_signal.normalize_and_set_metadata(normalize_strategy)
