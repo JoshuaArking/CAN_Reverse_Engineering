@@ -60,6 +60,25 @@ def generate_reverse_endian(a_timer: PipelineTimer,
         print("\nIntegral generation already completed and forcing is turned off. Using pickled data...")
         return load(open(integral_pickle_filename, "rb"))
 
+    def reverseBits(num):
+        # convert number into binary representation
+        # output will be like bin(10) = '0b10101'
+        print("converted " + str(num) + " to")
+        binary = bin(num)
+
+        # skip first two characters of binary
+        # representation string and reverse
+        # remaining string and then append zeros
+        # after it. binary[-1:1:-1]  --> start
+        # from last character and reverse it until
+        # second last character from left
+        reverse = binary[-1:1:-1]
+        reverse = reverse + (8 - len(reverse)) * '0'
+
+        # converts reversed binary string into integer
+        print(str(int(reverse, 2)) + ".")
+        return int(reverse, 2)
+
     a_timer.start_function_time()
 
     reverse_endian_dict = {}
@@ -72,8 +91,6 @@ def generate_reverse_endian(a_timer: PipelineTimer,
                 transformed_signal = signal
                 original_time_series = signal.time_series
 
-                print("OLD###")
-                print(transformed_signal.original_data['b0'])
 
                 # I know there's a better way to do this, rewrite after POC works
                 b0 = signal.original_data['b0']
@@ -85,17 +102,8 @@ def generate_reverse_endian(a_timer: PipelineTimer,
                 b6 = signal.original_data['b6']
                 b7 = signal.original_data['b7']
 
-                transformed_signal.original_data['b0'] = b7
-                transformed_signal.original_data['b1'] = b6
-                transformed_signal.original_data['b2'] = b5
-                transformed_signal.original_data['b3'] = b4
-                transformed_signal.original_data['b4'] = b3
-                transformed_signal.original_data['b5'] = b2
-                transformed_signal.original_data['b6'] = b1
-                transformed_signal.original_data['b7'] = b0
-
-                print("NEW###")
-                print(transformed_signal.original_data['b0'])
+                for i in range(0,7):
+                    transformed_signal.original_data['b' + str(i)] = transformed_signal.original_data['b' + str(i)].map(reverseBits)
 
                 # Normalize the signal and update its meta-data
                 transformed_signal.normalize_and_set_metadata(normalize_strategy)
