@@ -1,6 +1,7 @@
 from FileBoi import FileBoi
 from Sample import Sample
 import tkinter as tk
+from tkinter import ttk
 # from Plotter import plot_sample_threshold_heatmap
 
 # Cross validation parameters for finding an optimal tokenization inversion distance threshold -- NOT WORKING?
@@ -55,15 +56,18 @@ def semantic(vehicle_number):
     sample.plot_dendrogram(linkage_matrix, vehicle_number=str(current_vehicle_number))
 
 
-root = tk.Tk()
-root.title("CAN Reverse Engineering")
-mainframe = tk.Frame(root, padding="3 3 12 12")
-mainframe.tk.grid(column=0, row=0, sticky=(N, W, E, S))
-root.columnconfigure(0, weight=1)
-root.rowconfigure(0, weight=1)
-tk.Button(mainframe, text="lexical 0", command=lambda: lexical(0)).grid(column=3, row=3, sticky=W)
-textbox = tk.Text(mainframe, width=40, height=10)
+def textout(text):
+    T.insert(tk.END, text)
 
-textbox.insert(tk.END, "Just a text Widget\nin two lines\n")
-root.mainloop()
+root = tk.Tk()
+T = tk.Text(root, height=2, width=30)
+T.pack()
+T.insert(tk.END, "started")
+frame = tk.Frame(root)
+frame.pack()
+#button1 = tk.Button(frame, text="Read in files", command=boot)
+#button1.pack(side=tk.LEFT)
+button2 = tk.Button(frame, text="Lexical Analysis", command=lambda: textout("hi\n"))
+button2.pack(side=tk.LEFT)
+tk.mainloop()
 
