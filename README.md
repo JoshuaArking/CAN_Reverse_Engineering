@@ -4,7 +4,6 @@ Todo:
 <strike>Fix file detection to be less strict with file names</strike>  
 <strike>rewrite J1979.py to USE A .CSV file of known PIDS</strike>  
 <strike>Add bytewise reverse endian operations</strike>  
-Add GUI for ease of use  
 Add bitwise reverse endian operations  
 Integrate support for different filetypes from https://github.com/JoshuaArking/asc2log  
 Add support for .DBC files  
