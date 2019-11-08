@@ -10,7 +10,8 @@ Add support for .DBC files
 Improve input filtering  
 Add support for realtime processing on ICS HW using https://github.com/intrepidcs/python_ics  
 Add multi-trip awareness
-Improve ability to add and compare truth data other than J1979 pids   
+Improve ability to add and compare truth data other than J1979 pids  
+Add GUI for ease of use  
 Create delta analysis to find the difference between two signals  
 Add filters for signals only incrementing / decrementing, among other things  
 
