@@ -1,5 +1,5 @@
 from PreProcessor import PreProcessor
-from Transform import generate_integrals, generate_reverse_endian
+from Transform import generate_integrals
 from Validator import Validator
 from LexicalAnalysis import tokenize_dictionary, generate_signals
 from SemanticAnalysis import generate_correlation_matrix, signal_clustering, j1979_signal_labeling
@@ -114,7 +114,7 @@ class Sample:
         # Move back to root of './output/make_model_year/sample_index/"
         chdir("../../../")
 
-    def pre_process(self, endian_reverse):
+    def pre_process(self):
         self.make_and_move_to_vehicle_directory()
         pre_processor = PreProcessor(self.path, pickle_arb_id_filename, pickle_j1979_filename, self.use_j1979)
 
@@ -128,8 +128,7 @@ class Sample:
                                                                                    time_conversion,
                                                                                    freq_analysis_accuracy,
                                                                                    freq_synchronous_threshold,
-                                                                                   force_pre_processing,
-                                                                                   endian_reverse)
+                                                                                   force_pre_processing)
 
 
         if dump_to_pickle:
@@ -330,19 +329,3 @@ class Sample:
             print("\tComplete...")
         self.move_back_to_parent_directory()
         return integral_dict
-
-    def generate_reverse_endian(self, id_dictionary: dict, postpone_pickle: bool = False):
-        self.make_and_move_to_vehicle_directory()
-        reverse_endian_dict = generate_reverse_endian(a_timer=a_timer,
-                                           signal_dict=id_dictionary,
-                                           integral_pickle_filename=pickle_integral_filename,
-                                           normalize_strategy=signal_normalize_strategy,
-                                           force=force_signal_generation)
-        # postpone_pickle is simply a check whether J1979 data was present in the sample. If it was present, then wait
-        # to save out the signal_dictionary until correlated Signals are labeled by sample.j1979_labeling().
-        if dump_to_pickle and not postpone_pickle and not path.isfile(pickle_integral_filename):
-            print("\nDumping integral dictionary for " + self.output_vehicle_dir + " to " + pickle_integral_filename)
-            dump(reverse_endian_dict, open(pickle_integral_filename, "wb"))
-            print("\tComplete...")
-        self.move_back_to_parent_directory()
-        return reverse_endian_dict
