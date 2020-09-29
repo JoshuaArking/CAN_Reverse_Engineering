@@ -1,4 +1,6 @@
-from pandas import concat, DataFrame, read_csv
+from math import isnan
+
+from pandas import concat, DataFrame, read_csv, Series
 from numpy import zeros, clip
 from os import path, remove
 from pickle import load
@@ -47,7 +49,13 @@ def generate_correlation_matrix(a_timer:                          PipelineTimer,
                               index=largest_index)
 
     for k_signal_id, signal in non_static_signals_dict.items():
-        df[k_signal_id] = signal.time_series.reindex(index=largest_index, method='nearest')
+        # sort signal original data to be monotonic.
+        # TODO just checking the last element works now, but may need to change for other datasets.
+        if not isnan(signal.time_series.index.values[-1]):
+            print("Semantic for " + str(signal.arb_id) + "\n")
+            df[k_signal_id] = signal.time_series.reindex(index=largest_index, method='nearest')
+        else:
+            print("nan #$#$#$#$#$#$#$#$#$#")
 
     # Calculate the correlation matrix for this DataFrame of all non-static signals.
     corr_matrix = df.corr()
