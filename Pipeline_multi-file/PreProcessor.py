@@ -159,8 +159,8 @@ class PreProcessor:
                         this_id.original_data = this_id.original_data[~correction_mask]
 
                     # Check for non-monotonic values and sort them to be monotonic
-                    if not this_id.original_data.index.is_monotonic:
-                        this_id.original_data.sort_index(inplace=True)
+                    #if not this_id.original_data.index.is_monotonic:
+                    this_id.original_data.sort_index(inplace=True)
 
 
                     this_id.generate_binary_matrix_and_tang(a_timer, normalize_strategy)
