@@ -6,7 +6,7 @@ from typing import Callable
 from ArbID import ArbID
 from J1979 import J1979
 from PipelineTimer import PipelineTimer
-
+import faster_than_csv as csv
 
 class PreProcessor:
     def __init__(self, data_filename: str, id_output_filename: str, j1979_output_filename: str, use_j1979: bool):
@@ -41,13 +41,14 @@ class PreProcessor:
 
         a_timer.start_function_time()
 
-        self.data = read_csv(filename,
-                             header=None,
-                             names=['time', 'id', 'dlc', 'b0', 'b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7'],
-                             skiprows=7,
-                             delimiter='\t',
-                             converters=convert_dict,
-                             index_col=0)
+        #self.data = read_csv(filename,
+        #                     header=None,
+        #                     names=['time', 'id', 'dlc', 'b0', 'b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7'],
+        #                     skiprows=7,
+        #                     delimiter='\t',
+        #                     converters=convert_dict,
+        #                     index_col=0)
+        self.data = csv.csv2dict(filename) # TODO make this work! much faster than read_csv.
 
         a_timer.set_can_csv_to_df()
 
