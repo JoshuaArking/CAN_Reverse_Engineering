@@ -6,7 +6,8 @@ from typing import Callable
 from ArbID import ArbID
 from J1979 import J1979
 from PipelineTimer import PipelineTimer
-import faster_than_csv as csv
+import faster_than_csv as csv_fast
+import csv
 
 class PreProcessor:
     def __init__(self, data_filename: str, id_output_filename: str, j1979_output_filename: str, use_j1979: bool):
@@ -14,6 +15,7 @@ class PreProcessor:
         self.id_output_filename:    str = id_output_filename
         self.j1979_output_filename: str = j1979_output_filename
         self.data:                  DataFrame = None
+        self.testdata:              DataFrame = None
         self.import_time:           float = 0.0
         self.dictionary_time:       float = 0.0
         self.total_time:            float = 0.0
@@ -41,14 +43,33 @@ class PreProcessor:
 
         a_timer.start_function_time()
 
-        #self.data = read_csv(filename,
-        #                     header=None,
-        #                     names=['time', 'id', 'dlc', 'b0', 'b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7'],
-        #                     skiprows=7,
-        #                     delimiter='\t',
-        #                     converters=convert_dict,
-        #                     index_col=0)
-        self.data = csv.csv2dict(filename) # TODO make this work! much faster than read_csv.
+        self.testdata = read_csv(filename,
+                             header=None,
+                             names=['time', 'id', 'dlc', 'b0', 'b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7'],
+                             skiprows=7,
+                             delimiter='\t',
+                             converters=convert_dict,
+                             index_col=0)
+        self.testdata.to_csv("oldData.csv")
+        self.data = DataFrame(csv_fast.csv2list(filename))
+        self.data = self.data.iloc[6:,0].str.split("\t", expand = True) # TODO get columns named before or after split?
+        self.data.columns =  ['time', 'id', 'dlc', 'b0', 'b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7']
+        time = [x[:-1] for x in self.data['time']] # TODO Remove this! for debugging purposes only
+        self.data['time'] = [x[:-1] for x in self.data['time']] # drop last digit of time, usually just :
+        self.data.fillna(0,inplace=True) # gets rid of None and replace with 0, original 0 is 00 in dataframe
+        self.data.set_index('time',inplace=True, drop=True)
+        try:
+            with open("newData.csv", 'w') as csvfile:
+                writer = csv.writer(csvfile)
+                writer.writerow(['time', 'id', 'dlc', 'b0', 'b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7'])
+                for val in csv_fast.csv2list(filename):
+                    if "#" in val or "Starting" in val:
+                        print("COMMENT FOUND")
+                    else:
+                        writer.writerow([val])
+
+        except IOError:
+            print("IOError")
 
         a_timer.set_can_csv_to_df()
 
